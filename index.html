@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Craftmanship Day Q1 2026 - Kabisa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="https://kabisa.nl/wp-content/uploads/2022/12/cropped-favicon-32x32.png" sizes="32x32">
+  <meta name="theme-color" content="#0a0a1a">
+</head>
+<body>
+
+  <!-- Particles background -->
+  <canvas id="particles"></canvas>
+
+  <!-- Sticky header with glassmorphism -->
+  <header class="header" id="header">
+    <div class="container header-inner">
+      <a href="https://kabisa.nl" class="logo" aria-label="Kabisa">
+        <img src="https://kabisa.nl/wp-content/uploads/2022/12/kabisa-logo.svg" alt="Kabisa Software Artisans" width="130">
+      </a>
+      <nav class="nav desktop-nav">
+        <a href="#agenda">Agenda</a>
+        <a href="#sprekers">Sprekers</a>
+      </nav>
+      <!-- Live clock in header -->
+      <div class="header-live" id="headerLive">
+        <span class="live-dot"></span>
+        <span class="header-clock" id="headerClock">--:--</span>
+      </div>
+    </div>
+    <!-- Progress bar across header bottom -->
+    <div class="header-progress">
+      <div class="header-progress-bar" id="headerProgress"></div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero" id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="container hero-content">
+      <div class="hero-badge" data-animate>
+        <span class="live-dot"></span> Kabisa Software Artisans
+      </div>
+      <h1 data-animate>Craftmanship<br>Day <span class="gradient-text">Q1 '26</span></h1>
+      <p class="hero-subtitle" data-animate>Lightning talks, groepsdiscussies en kennisdeling over AI, tooling en craftsmanship.</p>
+
+      <div class="hero-cards" data-animate>
+        <div class="info-card">
+          <div class="info-card-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          </div>
+          <div>
+            <span class="info-card-label">Datum</span>
+            <span class="info-card-value">8 april 2026</span>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div>
+            <span class="info-card-label">Tijd</span>
+            <span class="info-card-value">13:00 – 20:00</span>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div>
+            <span class="info-card-label">Locatie</span>
+            <span class="info-card-value">Kabisa HQ, Weert</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Countdown -->
+      <div class="countdown" id="countdown" data-animate>
+        <div class="countdown-item"><span id="countHours">00</span><small>uur</small></div>
+        <div class="countdown-sep">:</div>
+        <div class="countdown-item"><span id="countMinutes">00</span><small>min</small></div>
+        <div class="countdown-sep">:</div>
+        <div class="countdown-item"><span id="countSeconds">00</span><small>sec</small></div>
+      </div>
+      <p class="countdown-label" id="countdownLabel" data-animate></p>
+    </div>
+
+    <div class="scroll-indicator" id="scrollIndicator">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+    </div>
+  </section>
+
+  <!-- Live status bar (mobile sticky) -->
+  <div class="live-bar" id="liveBar">
+    <div class="live-bar-inner">
+      <span class="live-dot"></span>
+      <span class="live-bar-status" id="liveStatus">Laden...</span>
+      <span class="live-bar-time" id="liveTime">--:--</span>
+    </div>
+    <div class="live-bar-progress">
+      <div class="live-bar-progress-fill" id="liveProgress"></div>
+    </div>
+  </div>
+
+  <!-- Agenda -->
+  <section id="agenda" class="agenda">
+    <div class="container">
+      <div class="section-header" data-animate>
+        <h2>Agenda</h2>
+        <p class="section-sub">Tik op een sessie voor details</p>
+      </div>
+
+      <div class="timeline" id="timeline">
+
+        <div class="time-block block-break" data-start="13:00" data-end="13:15" data-animate>
+          <div class="block-timeline-dot"></div>
+          <div class="time">13:00</div>
+          <div class="block-content">
+            <h3>Welkom!</h3>
+          </div>
+          <div class="block-duration">15 min</div>
+        </div>
+
+        <div class="time-block block-discussion" data-start="13:15" data-end="14:00" data-animate>
+          <div class="block-timeline-dot"></div>
+          <div class="time">13:15</div>
+          <div class="block-content">
+            <h3>Groepsdiscussie 1</h3>
+            <p class="block-desc">Verdieping in kleine groepen</p>
+          </div>
+          <div class="block-duration">45 min</div>
+        </div>
+
+        <div class="time-block block-talk" data-start="14:00" data-end="14:10" data-animate>
+          <div class="block-timeline-dot"></div>
+          <div class="time">14:00</div>
+          <div class="block-content">
+            <div class="speaker-row">
+              <div class="speaker-thumb-wrap"><img src="photos/joost-saanen.png" alt="Joost Saanen" loading="lazy"></div>
+              <div>
+                <h3>Gebruik agent-deck bij AI Agentic Development</h3>
+                <p class="speaker-name">Joost Saanen</p>
+              </div>
+            </div>
+          </div>
+          <div class="block-duration">10 min</div>
+        </div>
+
+        <div class="time-block block-talk" data-start="14:10" data-end="14:20" data-animate>
+          <div class="block-timeline-dot"></div>
+          <div class="time">14:10</div>
+          <div class="block-content">
+            <div class="speaker-row">
+              <div class="speaker-thumb-wrap"><img src="photos/ariejan-de-vroom.png" alt="Ariejan de Vroom" loading="lazy"></div>
+              <div>
+                <h3>Homelab managen met Claude</h3>
+                <p class="speaker-name">Ariejan de Vroom</p>
+              </div>
+            </div>
+          </div>
+          <div class="block-duration">10 min</div>
+        </div>
+
+        <div class="time-block block-talk" data-start="14:20" data-end="14:25" data-animate>
+          <div class="block-timeline-dot"></div>
+          <div class="time">14:20</div>
+          <div class="block-content">
+            <div class="speaker-row">
+              <div class="speaker-thumb-wrap"><img src="photos/andy-van-dongen.png" alt="Andy van Dongen" loading="lazy"></div>
+              <div>
+                <h3>Bouwen van NAS met AI</h3>
+                <p class="speaker-name">Andy van Dongen</p>
+              </div>
+            </div>
+          </div>
+          <div class="block-duration">5 min</div>
+        </div>
+
+        <div class="time-block block-talk" data-start="14:25" data-end="14:30" data-animate>
+          <div class="block-timeline-dot"></div>
+          <div class="time">14:25</div>
+          <div class="block-content">
+            <div class="speaker-row">
+              <div class="speaker-thumb-wrap"><img src="photos/david-weng.png" alt="David Weng" loading="lazy"></div>
+              <div>
+                <h3>Titel volgt</h3>
+                <p class="speaker-name">David Weng</p>
+              </div>
+            </div>
+          </div>
+          <div class="block-duration">5 min</div>
+        </div>
+
+        <div class="time-block block-talk" data-start="14:30" data-end="14:35" data-animate>
+          <div class="block-timeline-dot"></div>
+          <div class="time">14:30</div>
+          <div class="block-content">
+            <div class="speaker-row">
+              <div class="speaker-thumb-wrap"><img src="photos/aschwin-bruyning.png" alt="Aschwin Bruyning" loading="lazy"></div>
+              <div>
+                <h3>Superpowers</h3>
+                <p class="speaker-name">Aschwin Bruyning</p>
+              </div>
+            </div>
+          </div>
+          <div class="block-duration">5 min</div>
+        </div>
+
+        <div class="time-block block-talk" data-start="14:35" data-end="14:40" data-animate>
+          <div class="block-timeline-dot"></div>
+          <div class="time">14:35</div>
+          <div class="block-content">
+            <div class="speaker-row">
+              <div class="speaker-thumb-wrap"><img src="photos/nick-van-eijk.png" alt="Nick van Eijk" loading="lazy"></div>
+              <div>
+                <h3>AI en slecht gedocumenteerde integraties</h3>
+                <p class="speaker-name">Nick van Eijk</p>
+              </div>
+            </div>
+          </div>
+          <div class="block-duration">5 min</div>
+        </div>
+
+        <div class="time-block block-break" data-start="14:40" data-end="14:55" data-animate>
+          <div class="block-timeline-dot"></div>
+          <div class="time">14:40</div>
+          <div class="block-content">
+            <h3>&#9749; Pauze</h3>
+          </div>
+          <div class="block-duration">15 min</div>
+        </div>
+
+        <div class="time-block block-discussion" data-start="14:55" data-end="15:40" data-animate>
+          <div class="block-timeline-dot"></div>
+          <div class="time">14:55</div>
+          <div class="block-content">
+            <h3>Groepsdiscussie 2</h3>
+            <p class="block-desc">Verdieping in kleine groepen</p>
+          </div>
+          <div class="block-duration">45 min</div>
+        </div>
+
+        <div class="time-block block-talk" data-start="15:40" data-end="15:45" data-animate>
+          <div class="block-timeline-dot"></div>
+          <div class="time">15:40</div>
+          <div class="block-content">
+            <div class="speaker-row">
+              <div class="speaker-thumb-wrap"><img src="photos/johan-krap.png" alt="Johan Krap" loading="lazy"></div>
+              <div>
+                <h3>Automatisch tickets aanmaken</h3>
+                <p class="speaker-name">Johan Krap</p>
+              </div>
+            </div>
+          </div>
+          <div class="block-duration">5 min</div>
+        </div>
+
+        <div class="time-block block-talk" data-start="15:45" data-end="15:50" data-animate>
+          <div class="block-timeline-dot"></div>
+          <div class="time">15:45</div>
+          <div class="block-content">
+            <div class="speaker-row">
+              <div class="speaker-thumb-wrap"><img src="photos/marciano-schildmeijer.png" alt="Marciano Schildmeijer" loading="lazy"></div>
+              <div>
+                <h3>"grill-me" skill</h3>
+                <p class="speaker-name">Marciano Schildmeijer</p>
+              </div>
+            </div>
+          </div>
+          <div class="block-duration">5 min</div>
+        </div>
+
+        <div class="time-block block-talk" data-start="15:50" data-end="15:55" data-animate>
+          <div class="block-timeline-dot"></div>
+          <div class="time">15:50</div>
+          <div class="block-content">
+            <div class="speaker-row">
+              <div class="speaker-thumb-wrap"><img src="photos/nico-vromans.png" alt="Nico Vromans" loading="lazy"></div>
+              <div>
+                <h3>Speckit</h3>
+                <p class="speaker-name">Nico Vromans</p>
+              </div>
+            </div>
+          </div>
+          <div class="block-duration">5 min</div>
+        </div>
+
+        <div class="time-block block-talk" data-start="15:55" data-end="16:05" data-animate>
+          <div class="block-timeline-dot"></div>
+          <div class="time">15:55</div>
+          <div class="block-content">
+            <div class="speaker-row">
+              <div class="speaker-thumb-wrap"><img src="photos/piet-de-vries.png" alt="Piet de Vries" loading="lazy"></div>
+              <div>
+                <h3>Effici&euml;nt lokaal modellen runnen via MLX model</h3>
+                <p class="speaker-name">Piet de Vries</p>
+              </div>
+            </div>
+          </div>
+          <div class="block-duration">10 min</div>
+        </div>
+
+        <div class="time-block block-talk" data-start="16:05" data-end="16:15" data-animate>
+          <div class="block-timeline-dot"></div>
+          <div class="time">16:05</div>
+          <div class="block-content">
+            <div class="speaker-row">
+              <div class="speaker-thumb-wrap"><img src="photos/egon-meijers.png" alt="Egon Meijers" loading="lazy"></div>
+              <div>
+                <h3>Transcriberen van meetings</h3>
+                <p class="speaker-name">Egon Meijers</p>
+              </div>
+            </div>
+          </div>
+          <div class="block-duration">10 min</div>
+        </div>
+
+        <div class="time-block block-talk" data-start="16:15" data-end="16:20" data-animate>
+          <div class="block-timeline-dot"></div>
+          <div class="time">16:15</div>
+          <div class="block-content">
+            <div class="speaker-row">
+              <div class="speaker-thumb-wrap"><img src="photos/thijs-creemers.png" alt="Thijs Creemers" loading="lazy"></div>
+              <div>
+                <h3>Verwerken van Dependabot upgrades en security</h3>
+                <p class="speaker-name">Thijs Creemers</p>
+              </div>
+            </div>
+          </div>
+          <div class="block-duration">5 min</div>
+        </div>
+
+        <div class="time-block block-break" data-start="16:20" data-end="16:35" data-animate>
+          <div class="block-timeline-dot"></div>
+          <div class="time">16:20</div>
+          <div class="block-content">
+            <h3>&#9749; Pauze</h3>
+          </div>
+          <div class="block-duration">15 min</div>
+        </div>
+
+        <div class="time-block block-discussion" data-start="16:35" data-end="17:20" data-animate>
+          <div class="block-timeline-dot"></div>
+          <div class="time">16:35</div>
+          <div class="block-content">
+            <h3>Groepsdiscussie 3</h3>
+            <p class="block-desc">Verdieping in kleine groepen</p>
+          </div>
+          <div class="block-duration">45 min</div>
+        </div>
+
+        <div class="time-block block-break block-dinner" data-start="17:20" data-end="18:05" data-animate>
+          <div class="block-timeline-dot"></div>
+          <div class="time">17:20</div>
+          <div class="block-content">
+            <h3>&#127837; Avondeten</h3>
+          </div>
+          <div class="block-duration">45 min</div>
+        </div>
+
+        <div class="time-block block-talk" data-start="18:05" data-end="18:15" data-animate>
+          <div class="block-timeline-dot"></div>
+          <div class="time">18:05</div>
+          <div class="block-content">
+            <div class="speaker-row">
+              <div class="speaker-thumb-wrap"><img src="photos/guido-theelen.png" alt="Guido Theelen" loading="lazy"></div>
+              <div>
+                <h3>Mijn Opencodex setup</h3>
+                <p class="speaker-name">Guido Theelen</p>
+              </div>
+            </div>
+          </div>
+          <div class="block-duration">10 min</div>
+        </div>
+
+        <div class="time-block block-talk" data-start="18:15" data-end="18:20" data-animate>
+          <div class="block-timeline-dot"></div>
+          <div class="time">18:15</div>
+          <div class="block-content">
+            <div class="speaker-row">
+              <div class="speaker-thumb-wrap"><img src="photos/matthijs-groen.png" alt="Matthijs Groen" loading="lazy"></div>
+              <div>
+                <h3>AI Agent Package Manager</h3>
+                <p class="speaker-name">Matthijs Groen</p>
+              </div>
+            </div>
+          </div>
+          <div class="block-duration">5 min</div>
+        </div>
+
+        <div class="time-block block-talk" data-start="18:20" data-end="18:25" data-animate>
+          <div class="block-timeline-dot"></div>
+          <div class="time">18:20</div>
+          <div class="block-content">
+            <div class="speaker-row">
+              <div class="speaker-thumb-wrap"><img src="photos/sander-van-maurik.png" alt="Sander van Maurik" loading="lazy"></div>
+              <div>
+                <h3>MCP server in backend voor chatfunctie</h3>
+                <p class="speaker-name">Sander van Maurik</p>
+              </div>
+            </div>
+          </div>
+          <div class="block-duration">5 min</div>
+        </div>
+
+        <div class="time-block block-talk" data-start="18:25" data-end="18:30" data-animate>
+          <div class="block-timeline-dot"></div>
+          <div class="time">18:25</div>
+          <div class="block-content">
+            <div class="speaker-row">
+              <div class="speaker-thumb-wrap"><img src="photos/tom-schoutens.png" alt="Tom Schoutens" loading="lazy"></div>
+              <div>
+                <h3>Interactief studeren met behulp van AI</h3>
+                <p class="speaker-name">Tom Schoutens</p>
+              </div>
+            </div>
+          </div>
+          <div class="block-duration">5 min</div>
+        </div>
+
+        <div class="time-block block-talk" data-start="18:30" data-end="18:35" data-animate>
+          <div class="block-timeline-dot"></div>
+          <div class="time">18:30</div>
+          <div class="block-content">
+            <div class="speaker-row">
+              <div class="speaker-thumb-wrap"><img src="photos/luc-zwanenberg.png" alt="Luc Zwanenberg" loading="lazy"></div>
+              <div>
+                <h3>Inlezen van CV's mbv AI</h3>
+                <p class="speaker-name">Luc Zwanenberg</p>
+              </div>
+            </div>
+          </div>
+          <div class="block-duration">5 min</div>
+        </div>
+
+        <div class="time-block block-break" data-start="18:35" data-end="18:50" data-animate>
+          <div class="block-timeline-dot"></div>
+          <div class="time">18:35</div>
+          <div class="block-content">
+            <h3>&#9889; Vrije ruimte / extra talks</h3>
+          </div>
+          <div class="block-duration">15 min</div>
+        </div>
+
+        <div class="time-block block-break" data-start="18:50" data-end="19:05" data-animate>
+          <div class="block-timeline-dot"></div>
+          <div class="time">18:50</div>
+          <div class="block-content">
+            <h3>&#9749; Pauze</h3>
+          </div>
+          <div class="block-duration">15 min</div>
+        </div>
+
+        <div class="time-block block-discussion" data-start="19:05" data-end="19:45" data-animate>
+          <div class="block-timeline-dot"></div>
+          <div class="time">19:05</div>
+          <div class="block-content">
+            <h3>Gezamenlijke terugblik</h3>
+            <p class="block-desc">Afsluitende uitwisseling</p>
+          </div>
+          <div class="block-duration">40 min</div>
+        </div>
+
+        <div class="time-block block-break" data-start="19:45" data-end="20:00" data-animate>
+          <div class="block-timeline-dot"></div>
+          <div class="time">19:45</div>
+          <div class="block-content">
+            <h3>&#127881; Wrap-up en informeel einde</h3>
+          </div>
+          <div class="block-duration">15 min</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Sprekers -->
+  <section id="sprekers" class="speakers">
+    <div class="container">
+      <div class="section-header" data-animate>
+        <h2>Sprekers</h2>
+        <p class="section-sub">17 lightning talks door het team</p>
+      </div>
+      <div class="speakers-grid">
+
+        <div class="speaker-card" data-animate>
+          <div class="speaker-photo-wrap"><img src="photos/joost-saanen.png" alt="Joost Saanen" loading="lazy"></div>
+          <h4>Joost Saanen</h4>
+          <p>Gebruik agent-deck bij AI Agentic Development</p>
+        </div>
+
+        <div class="speaker-card" data-animate>
+          <div class="speaker-photo-wrap"><img src="photos/ariejan-de-vroom.png" alt="Ariejan de Vroom" loading="lazy"></div>
+          <h4>Ariejan de Vroom</h4>
+          <p>Homelab managen met Claude</p>
+        </div>
+
+        <div class="speaker-card" data-animate>
+          <div class="speaker-photo-wrap"><img src="photos/andy-van-dongen.png" alt="Andy van Dongen" loading="lazy"></div>
+          <h4>Andy van Dongen</h4>
+          <p>Bouwen van NAS met AI</p>
+        </div>
+
+        <div class="speaker-card" data-animate>
+          <div class="speaker-photo-wrap"><img src="photos/david-weng.png" alt="David Weng" loading="lazy"></div>
+          <h4>David Weng</h4>
+          <p>Titel volgt</p>
+        </div>
+
+        <div class="speaker-card" data-animate>
+          <div class="speaker-photo-wrap"><img src="photos/aschwin-bruyning.png" alt="Aschwin Bruyning" loading="lazy"></div>
+          <h4>Aschwin Bruyning</h4>
+          <p>Superpowers</p>
+        </div>
+
+        <div class="speaker-card" data-animate>
+          <div class="speaker-photo-wrap"><img src="photos/nick-van-eijk.png" alt="Nick van Eijk" loading="lazy"></div>
+          <h4>Nick van Eijk</h4>
+          <p>AI en slecht gedocumenteerde integraties</p>
+        </div>
+
+        <div class="speaker-card" data-animate>
+          <div class="speaker-photo-wrap"><img src="photos/johan-krap.png" alt="Johan Krap" loading="lazy"></div>
+          <h4>Johan Krap</h4>
+          <p>Automatisch tickets aanmaken</p>
+        </div>
+
+        <div class="speaker-card" data-animate>
+          <div class="speaker-photo-wrap"><img src="photos/marciano-schildmeijer.png" alt="Marciano Schildmeijer" loading="lazy"></div>
+          <h4>Marciano Schildmeijer</h4>
+          <p>"grill-me" skill</p>
+        </div>
+
+        <div class="speaker-card" data-animate>
+          <div class="speaker-photo-wrap"><img src="photos/nico-vromans.png" alt="Nico Vromans" loading="lazy"></div>
+          <h4>Nico Vromans</h4>
+          <p>Speckit</p>
+        </div>
+
+        <div class="speaker-card" data-animate>
+          <div class="speaker-photo-wrap"><img src="photos/piet-de-vries.png" alt="Piet de Vries" loading="lazy"></div>
+          <h4>Piet de Vries</h4>
+          <p>Effici&euml;nt lokaal modellen runnen via MLX model</p>
+        </div>
+
+        <div class="speaker-card" data-animate>
+          <div class="speaker-photo-wrap"><img src="photos/egon-meijers.png" alt="Egon Meijers" loading="lazy"></div>
+          <h4>Egon Meijers</h4>
+          <p>Transcriberen van meetings</p>
+        </div>
+
+        <div class="speaker-card" data-animate>
+          <div class="speaker-photo-wrap"><img src="photos/thijs-creemers.png" alt="Thijs Creemers" loading="lazy"></div>
+          <h4>Thijs Creemers</h4>
+          <p>Dependabot upgrades en security</p>
+        </div>
+
+        <div class="speaker-card" data-animate>
+          <div class="speaker-photo-wrap"><img src="photos/guido-theelen.png" alt="Guido Theelen" loading="lazy"></div>
+          <h4>Guido Theelen</h4>
+          <p>Mijn Opencodex setup</p>
+        </div>
+
+        <div class="speaker-card" data-animate>
+          <div class="speaker-photo-wrap"><img src="photos/matthijs-groen.png" alt="Matthijs Groen" loading="lazy"></div>
+          <h4>Matthijs Groen</h4>
+          <p>AI Agent Package Manager</p>
+        </div>
+
+        <div class="speaker-card" data-animate>
+          <div class="speaker-photo-wrap"><img src="photos/sander-van-maurik.png" alt="Sander van Maurik" loading="lazy"></div>
+          <h4>Sander van Maurik</h4>
+          <p>MCP server in backend voor chatfunctie</p>
+        </div>
+
+        <div class="speaker-card" data-animate>
+          <div class="speaker-photo-wrap"><img src="photos/tom-schoutens.png" alt="Tom Schoutens" loading="lazy"></div>
+          <h4>Tom Schoutens</h4>
+          <p>Interactief studeren met behulp van AI</p>
+        </div>
+
+        <div class="speaker-card" data-animate>
+          <div class="speaker-photo-wrap"><img src="photos/luc-zwanenberg.png" alt="Luc Zwanenberg" loading="lazy"></div>
+          <h4>Luc Zwanenberg</h4>
+          <p>Inlezen van CV's mbv AI</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <img src="https://kabisa.nl/wp-content/uploads/2022/12/kabisa-logo.svg" alt="Kabisa" width="120" class="footer-logo">
+      <p>Craftmanship Day Q1 2026 &mdash; <a href="https://kabisa.nl">Kabisa Software Artisans</a></p>
+    </div>
+  </footer>
+
+  <!-- Mobile bottom nav -->
+  <nav class="mobile-nav" id="mobileNav">
+    <a href="#hero" class="mobile-nav-item active" data-section="hero">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+      <span>Home</span>
+    </a>
+    <a href="#agenda" class="mobile-nav-item" data-section="agenda">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      <span>Agenda</span>
+    </a>
+    <button class="mobile-nav-item mobile-nav-now" id="scrollToNow">
+      <span class="now-pulse"></span>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      <span>Nu</span>
+    </button>
+    <a href="#sprekers" class="mobile-nav-item" data-section="sprekers">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      <span>Sprekers</span>
+    </a>
+  </nav>
+
+  <script src="app.js"></script>
+</body>
+</html>
